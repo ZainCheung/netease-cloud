@@ -1,6 +1,6 @@
 ## 网易云音乐升级
 
-调用官方接口，每天自动刷完300首歌，一个平均耗时为2分钟左右。
+调用官方接口，每天自动刷完300首歌，一个平均耗时为2分钟左右。放在服务器运行即可不需要人工干预，每天自动听歌做任务，向你的微信发送任务通知。
 
 <p align="center">
     <a href="https://github.com/ZainCheung"><img alt="Author" src="https://img.shields.io/badge/author-ZainCheung-blueviolet"/></a>
