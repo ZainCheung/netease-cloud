@@ -187,7 +187,7 @@ class Task(object):
 def init():
     global api # 初始化时设置api
     config = ConfigParser()
-    config.read('init.config', encoding='UTF-8')
+    config.read('init.config', encoding='UTF-8-sig')
     uin = config['token']['account']
     pwd = config['token']['password']
     api = config['setting']['api']
