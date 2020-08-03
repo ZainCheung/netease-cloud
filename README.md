@@ -13,7 +13,7 @@
 
 
 
-### 使用文档: https://zaincheung.gitee.io/netease-cloud
+### 使用文档: https://zaincheung.github.io/netease-cloud
 
 
 
