@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
 </head>
 <body>
-  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
   <div id="app"></div>
   <script>
     window.$docsify = {
@@ -17,21 +16,7 @@
       repo: 'https://github.com/ZainCheung/netease-cloud',
       loadSidebar: true,
       onlyCover: false,
-      auto2top: true,
-      disqus: 'shortname',
-      plugins: [
-        EditOnGithubPlugin.create(
-          'https://github.com/ZainCheung/netease-cloud/blob/master/docs/',
-          null,
-          function(file) {
-            if (file.indexOf('en') === -1) {
-              return '编辑'
-            } else {
-              return 'edit on git'
-            }
-          }
-        )
-      ]
+      auto2top: true
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
