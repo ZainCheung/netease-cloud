@@ -1,4 +1,4 @@
-## 从GitHub导入项目
+## 从GitHub导入项目 {docsify-ignore-all}
 
 使用这种方式部署网站接口，0成本且快速可用，且不用担心环境部署运维等问题，当然如果有条件用自己的服务器搭建也是可以的。
 
@@ -6,7 +6,7 @@
 
 fork这个API项目到你的仓库，记得点个Star哦
 
-![](https://s1.ax1x.com/2020/06/29/NWoCGj.png)
+![](https://s1.ax1x.com/2020/08/05/as0qZ8.png)
 
 #### 2. 导入项目
 

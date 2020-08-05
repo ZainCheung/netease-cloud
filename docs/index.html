@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>网易云音乐升级</title>
+  <link rel="icon" href="favicon.ico">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -13,11 +14,17 @@
   <script>
     window.$docsify = {
       name: '网易云升级',
-      repo: 'https://github.com/ZainCheung/netease-cloud',
+      repo: 'ZainCheung/netease-cloud',
       loadSidebar: true,
       onlyCover: false,
-      auto2top: true
+      auto2top: true,
+      subMaxLevel: 3
     }
+  </script>
+  <script>
+    // if (typeof navigator.serviceWorker !== 'undefined') {
+    //   navigator.serviceWorker.register('sw.js')
+    // }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>

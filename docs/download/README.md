@@ -1,14 +1,16 @@
-# 下载地址
+# 下载地址 {docsify-ignore-all}
 
 
 
-## 升级服务
+## netease-cloud(升级服务)
 
-Python项目地址：[https://github.com/ZainCheung/netease-cloud](https://github.com/ZainCheung/netease-cloud)
+项目地址：[https://github.com/ZainCheung/netease-cloud](https://github.com/ZainCheung/netease-cloud)
+
+
+
+## netease-cloud-api(API接口)
 
 api接口项目地址：[https://github.com/ZainCheung/netease-cloud-api](https://github.com/ZainCheung/netease-cloud-api)
-
-
 
 api的Demo演示地址：[https://netease-cloud-api.glitch.me/](https://netease-cloud-api.glitch.me/)
 
@@ -16,7 +18,7 @@ api的Glitch在线服务器：[https://glitch.com/edit/#!/netease-cloud-api](htt
 
 
 
-## 定制日推
+## netease-cloud-fastplay(快速刷歌)
 
 项目地址：[https://github.com/ZainCheung/netease-cloud-fastplay](https://github.com/ZainCheung/netease-cloud-fastplay)
 

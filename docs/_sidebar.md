@@ -9,11 +9,12 @@
 * * [GitHub](api/github "使用GitHub部署API")
 * * [复制服务](api/remix "使用Glitch的remix部署API")
 * * [服务器](api/server "使用服务器部署API")
-* [配置账号](config/ "配置文件的修改")
 * 效果演示
 * * [账号升级](show/up "账号升级页面演示")
 * * [微信提醒](show/wechat "微信推送消息")
 * * [播放次数](show/count "刷单曲播放次数")
+* [项目配置](config/)
+* [接口文档](document/)
 * [下载地址](download/)
 * [查看日志](log/)
 * [注意事项](attention/)
