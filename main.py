@@ -16,7 +16,12 @@ import time
 import json
 import logging
 import math
+import os
 
+'''
+使用绝对路径时，切换到项目的当前目录。
+'''
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 logFile = open("run.log", encoding="utf-8", mode="a")
 logging.basicConfig(stream=logFile, format="%(asctime)s %(name)s:%(levelname)s:%(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
 grade = [10,40,70,130,200,400,1000,3000,8000,20000]
