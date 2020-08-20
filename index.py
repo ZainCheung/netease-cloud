@@ -4,7 +4,7 @@
 @LastEditors: Daphel
 @description:网易云音乐全自动每日打卡云函数版
 @Date: 2020-06-25 14:28:48
-@LastEditTime: 2020-08-20 10:09:15
+@LastEditTime: 2020-08-20 10:16:15
 '''
 from configparser import ConfigParser
 from threading import Timer
@@ -60,7 +60,6 @@ class Task(object):
             self.error = '登录失败，请检查账号'
         self.cookies = response.cookies.get_dict()
         self.log('登录成功')
-        logger.info("登录成功")
 
     '''
     每日签到
@@ -71,10 +70,8 @@ class Task(object):
         data = json.loads(response.text)
         if data['code'] == 200:
             self.log('签到成功')
-            logger.info('签到成功')
         else:
             self.log('重复签到')
-            logger.info('重复签到')
 
     '''
     每日打卡300首歌
@@ -95,7 +92,6 @@ class Task(object):
         self.level = data['level']
         self.listenSongs = data['listenSongs']
         self.log('获取用户详情成功')
-        logger.info('获取用户详情成功')
 
     '''
     Server推送
@@ -109,10 +105,8 @@ class Task(object):
         data = json.loads(response.text)
         if data['errno'] == 0:
             self.log('用户:' + self.name + '  Server酱推送成功')
-            logger.info('用户:' + self.name + '  Server酱推送成功')
         else:
             self.log('用户:' + self.name + '  Server酱推送失败,请检查sckey是否正确')
-            logger.info('用户:' + self.name + '  Server酱推送失败,请检查sckey是否正确')
 
     '''
     自定义要推送到微信的内容
@@ -199,11 +193,9 @@ class Task(object):
             self.server()
         except:
             self.log('用户任务执行中断,请检查账号密码是否正确')
-            logger.error('用户任务执行中断,请检查账号密码是否正确========================================')
         else:
             self.log('用户:' + self.name + '  今日任务已完成')
-            logger.info('用户:' + self.name + '  今日任务已完成========================================')
-            
+           
         
 '''
 初始化：读取配置,配置文件为init.config
@@ -271,13 +263,13 @@ def taskPool():
         logger.info('多人开关已打开,即将执行进行多人任务')
         account = loadJson("account.json")
         for man in account:
-            logger.info('账号: ' + man['account'] + '  开始执行========================================')
+            logger.info('账号: ' + man['account'] + '  开始执行\n========================================')
             task = Task(man['account'], man['password'], man['sckey'])
             task.start()
             time.sleep(10)
         logger.info('所有账号已全部完成任务,服务进入休眠中,等待明天重新启动')
     else :
-        logger.info('账号: ' + config['uin'] + '  开始执行========================================')
+        logger.info('账号: ' + config['uin'] + '  开始执行\n========================================')
         if config['md5Switch'] is True:
             logger.info('MD5开关已打开,即将开始为你加密,密码不会上传至服务器,请知悉')
             config['pwd'] = md5(config['pwd'])
