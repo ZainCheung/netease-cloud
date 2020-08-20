@@ -1,10 +1,10 @@
 #coding:utf-8
 '''
 @author: ZainCheung
-@LastEditors: ZainCheung
+@LastEditors: Daphel
 @description:网易云音乐全自动每日打卡300首歌升级账号等级,使用前请先到init.config文件配置
 @Date: 2020-06-25 14:28:48
-@LastEditTime: 2020-06-26 17:38:18
+@LastEditTime: 2020-08-20 08:45:18
 '''
 from configparser import ConfigParser
 from threading import Timer
@@ -42,7 +42,7 @@ class Task(object):
         return response
 
     '''
-    登陆
+    登录
     '''
     def login(self):
         data = {"uin":self.uin,"pwd":self.pwd,"r":random.random()}
@@ -57,10 +57,10 @@ class Task(object):
         if code==200:
             self.error = ''
         else:
-            self.error = '登陆失败，请检查账号'
+            self.error = '登录失败，请检查账号'
         self.cookies = response.cookies.get_dict()
-        self.log('登陆成功')
-        logging.info("登陆成功")
+        self.log('登录成功')
+        logging.info("登录成功")
 
     '''
     每日签到
@@ -131,7 +131,7 @@ class Task(object):
                         self.tip = '还需听歌' + str(count-self.listenSongs) + '首即可升级'
                         break
                 else:
-                    self.tip = '你已经听够20000首歌曲,如果登陆天数达到800天即可满级'
+                    self.tip = '你已经听够20000首歌曲,如果登录天数达到800天即可满级'
             else:
                 self.tip = '恭喜你已经满级!'
         if self.error == '':
