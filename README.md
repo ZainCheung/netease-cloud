@@ -31,3 +31,6 @@
 - 使用PHP搭建的API接口：[netease-cloud-api](https://github.com/ZainCheung/netease-cloud-api)
 
 - 使用Python开发的修改日推（每日推荐歌曲）Windows软件：[netease-cloud-fast](https://github.com/ZainCheung/netease-cloud-fastplay)
+
+### 接口征集活动
+https://github.com/ZainCheung/netease-cloud-api/issues/31
