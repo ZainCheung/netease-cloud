@@ -25,9 +25,12 @@ account = 150********
 # 明文例如：123456abcd
 # MD5例如：efa224f8de55cb668cd01edbccdfc8a9
 password = bfa834f7de58cb650ca01edb********
+
+# 国家码，用于国外手机号登陆，国内为86
+countrycode = 86
 ```
 
-`token`区域下存放个人账号信息，account存放网易云账号，password存放密码
+`token`区域下存放个人账号信息，`account`存放网易云账号，`password`存放密码，`countrycode`为手机号的国家码
 
 !> 注意，这里密码填写类型与后面的md5开关相关联，具体见后面介绍
 

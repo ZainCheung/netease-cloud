@@ -1,10 +1,10 @@
 #coding:utf-8
 '''
 @author: ZainCheung
-@LastEditors: Daphel
+@LastEditors: ZainCheung
 @description:网易云音乐全自动每日打卡300首歌升级账号等级,使用前请先到init.config文件配置
 @Date: 2020-06-25 14:28:48
-@LastEditTime: 2020-08-20 09:50:18
+@LastEditTime: 2020-09-01 18:20:00
 '''
 from configparser import ConfigParser
 from threading import Timer
@@ -23,7 +23,7 @@ import os
 '''
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 logFile = open("run.log", encoding="utf-8", mode="a")
-logging.basicConfig(stream=logFile, format="%(asctime)s %(name)s:%(levelname)s:%(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
+logging.basicConfig(stream=logFile, format="%(asctime)s %(levelname)s:%(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
 grade = [10,40,70,130,200,400,1000,3000,8000,20000]
 api = ''
 
@@ -32,9 +32,10 @@ class Task(object):
     '''
     对象的构造函数
     '''
-    def __init__(self, uin, pwd, sckey):
+    def __init__(self, uin, pwd, sckey, countrycode=86):
         self.uin = uin
         self.pwd = pwd
+        self.countrycode = countrycode
         self.sckey = sckey
 
     '''
@@ -51,7 +52,7 @@ class Task(object):
     登录
     '''
     def login(self):
-        data = {"uin":self.uin,"pwd":self.pwd,"r":random.random()}
+        data = {"uin":self.uin,"pwd":self.pwd,"countrycode":self.countrycode,"r":random.random()}
         if '@' in self.uin:
             url = api + '?do=email'
         else:
@@ -126,9 +127,9 @@ class Task(object):
     content:消息的内容,支持MarkDown格式
     '''
     def diyText(self):
-        today = datetime.date.today()
-        kaoyan_day = datetime.date(2020,12,21) #2021考研党的末日
-        date = (kaoyan_day - today).days
+        # today = datetime.date.today()
+        # kaoyan_day = datetime.date(2020,12,21) #2021考研党的末日
+        # date = (kaoyan_day - today).days
         one = requests.get('https://api.qinor.cn/soup/').text # 每日一句的api
         for count in grade:
             if self.level < 10:
@@ -163,8 +164,6 @@ class Task(object):
             "------\n"
             "#### 打卡日志\n" + self.dakaSongs_list + "\n\n"
             "------\n"
-            "#### 考研倒计时\n- 距考研还有" + str(date) + "天，主人要加油学习啊！\n\n"
-			"------\n"
             "#### 今日一句\n- " + one + "\n\n")
 
     '''
@@ -228,6 +227,7 @@ def init():
     config.read('init.config', encoding='UTF-8-sig')
     uin = config['token']['account']
     pwd = config['token']['password']
+    countrycode = config['token']['countrycode']
     api = config['setting']['api']
     md5Switch = config.getboolean('setting','md5Switch')
     peopleSwitch = config.getboolean('setting','peopleSwitch')
@@ -237,6 +237,7 @@ def init():
     conf = {
             'uin': uin,
             'pwd': pwd,
+            'countrycode': countrycode,
             'api': api,
             'md5Switch': md5Switch, 
             'peopleSwitch':peopleSwitch,
@@ -302,7 +303,7 @@ def taskPool():
             print('MD5开关已打开,即将开始为你加密,密码不会上传至服务器,请知悉')
             logging.info('MD5开关已打开,即将开始为你加密,密码不会上传至服务器,请知悉')
             config['pwd'] = md5(config['pwd'])
-        task = Task(config['uin'], config['pwd'], config['sckey'])
+        task = Task(config['uin'], config['pwd'], config['sckey'], config['countrycode'])
         task.start()
 
 '''
