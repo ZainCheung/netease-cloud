@@ -12,9 +12,9 @@
 
 api接口项目地址：[https://github.com/ZainCheung/netease-cloud-api](https://github.com/ZainCheung/netease-cloud-api)
 
-api的Demo演示地址：[https://netease-cloud-api.glitch.me/](https://netease-cloud-api.glitch.me/)
+api的Demo演示地址：[https://netease-cloud-api-sep.glitch.me/](https://netease-cloud-api-sep.glitch.me/)
 
-api的Glitch在线服务器：[https://glitch.com/edit/#!/netease-cloud-api](https://glitch.com/edit/#!/netease-cloud-api)
+api的Glitch在线服务器：[https://glitch.com/edit/#!/netease-cloud-api-sep](https://glitch.com/edit/#!/netease-cloud-api-sep)
 
 
 

@@ -15,6 +15,7 @@
 * * [播放次数](show/count "刷单曲播放次数")
 * [项目配置](config/)
 * [接口文档](document/)
+* [API接口](demo/)
 * [下载地址](download/)
 * [查看日志](log/)
 * [注意事项](attention/)
