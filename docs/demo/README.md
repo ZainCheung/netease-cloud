@@ -10,8 +10,8 @@
 
 | 序号 |                             地址                             | 平均响应    |                     作者                      |  收录时间  | 是否可用 |
 | :--: | :----------------------------------------------------------: | ----------- | :-------------------------------------------: | :--------: | :------: |
-|  1   |           https://netease-cloud-api-sep.glitch.me/           | **8.539 s** |  [ZainCheung](https://github.com/ZainCheung)  |  2020.9.7  |    √     |
-|  2   |          https://netease-cloud-api-boyce.glitch.me/          | **超时**    |    [BoyceLig](https://github.com/BoyceLig)    |  2020.9.7  |    ×     |
+|  1   |           https://netease-cloud-api-sep.glitch.me/           | **8.539 s** |  [ZainCheung](https://github.com/ZainCheung)  |  2020.9.7  |    ×     |
+|  2   |          https://netease-cloud-api-boyce.glitch.me/          | **超时**    |    [BoyceLig](https://github.com/BoyceLig)    |  2020.9.7  |    √     |
 |  3   |             https://netease-cloud-api.muir.fun/              | **2.942 s** |  [BecodReyes](https://github.com/BecodReyes)  |  2020.9.7  |    √     |
 |  4   |                https://wymusic-xx.glitch.me/                 | **9.37 s**  |        [Me-x](https://github.com/Me-x)        |  2020.9.7  |    √     |
 |  5   |                 https://netease.sukanka.pub/                 | **3.091 s** |     [sukanka](https://github.com/sukanka)     | 2020.9.12  |    √     |
@@ -24,4 +24,7 @@
 |  12  |              https://sumrday.net/api/163music/               | **1.164 s** |      [Catker](https://github.com/Catker)      | 2020.10.25 |    √     |
 |  13  |             https://mytools.chiser.cc/music-api/             | **1.039 s** |  [aLuvletter](https://github.com/aLuvletter)  | 2020.10.25 |    √     |
 |  14  |              https://shijcc.top/cloudmusic-api/              | **0.664 s** |       [xy1so](https://github.com/xy1so)       | 2020.10.25 |    √     |
+|  15  |                   http://lvsheng.xyz/wyy/                    | **1.686 s** |  [1525249038](https://github.com/1525249038)  | 2020.11.1  |    √     |
+|  16  |                   http://api.husky105.cn/                    | **0.422 s** |    [WISH-WEI](https://github.com/WISH-WEI)    | 2020.11.1  |    √     |
+|  17  |             https://api.syhy.ink/netease-cloud/              | **2.436 s** |    [ShenHai9](https://github.com/ShenHai9)    | 2020.11.1  |    √     |
 
