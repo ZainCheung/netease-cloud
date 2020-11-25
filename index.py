@@ -118,7 +118,6 @@ class Task(object):
         # today = datetime.date.today()
         # kaoyan_day = datetime.date(2020,12,21) #2021考研党的末日
         # date = (kaoyan_day - today).days
-        one = requests.get('https://api.qinor.cn/soup/').text # 每日一句的api
         for count in grade:
             if self.level < 10:
                 if self.listenSongs < 20000:
@@ -148,9 +147,7 @@ class Task(object):
             "------\n"
             "#### 任务状态\n" + str(state) + "\n\n"
             "------\n"
-            "#### 打卡日志\n" + self.dakaSongs_list + "\n\n"
-            "------\n"
-            "#### 今日一句\n- " + one + "\n\n")
+            "#### 打卡日志\n" + self.dakaSongs_list + "\n\n")
 
     '''
     打印日志
