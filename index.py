@@ -100,7 +100,7 @@ class Task(object):
     def server(self):
         if self.sckey == '':
             return
-        url = 'https://sc.ftqq.com/' + self.sckey + '.send'
+        url = 'https://sctapi.ftqq.com/' + self.sckey + '.send'
         self.diyText() # 构造发送内容
         response = requests.get(url,params={"text":self.title, "desp":self.content})
         data = json.loads(response.text)
