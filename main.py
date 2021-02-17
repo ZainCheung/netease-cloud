@@ -112,10 +112,11 @@ class Task(object):
     '''
     def wxpusher(self):
         if (self.appToken == '' or self.wxpusheruid == ''):
+            self.log('未填写WxPusher推送所需参数，请检查')
             logger.info('未填写WxPusher推送所需参数，请检查')
             return
         self.diyText() # 构造发送内容
-        url = 'http://wxpusher.zjiecode.com/api/send/message/'
+        url = 'https://wxpusher.zjiecode.com/api/send/message/'
         data = json.dumps({
             "appToken":self.appToken,
             "content":self.content,
@@ -124,8 +125,7 @@ class Task(object):
             "uids":[self.wxpusheruid]
         })
         response = requests.post(url, data = data, headers = {'Content-Type': 'application/json;charset=UTF-8'})
-        r=response.json()
-        if r['data'][0]['status'] == '创建发送任务成功':
+        if (response.json()['data'][0]['status']) == '创建发送任务成功':
             self.log('用户:' + self.name + '  WxPusher推送成功')
             logging.info('用户:' + self.name + '  WxPusher推送成功')
         else:
@@ -145,11 +145,20 @@ class Task(object):
     def server(self):
         if self.sckey == '':
             return
-        url = 'https://sc.ftqq.com/' + self.sckey + '.send'
         self.diyText() # 构造发送内容
-        response = requests.get(url,params={"text":self.title, "desp":self.content})
-        data = json.loads(response.text)
-        if data['errno'] == 0:
+        data = {
+            "text":self.title,
+            "desp":self.content
+        }
+        if (self.pushmethod.lower() == 'scturbo'):      #Server酱 Turbo版
+            url = 'https://sctapi.ftqq.com/' + self.sckey + '.send'
+            response = requests.post(url, data=data, headers = {'Content-type': 'application/x-www-form-urlencoded'})
+            errno = response.json()['data']['errno']
+        else:                                           #Server酱 普通版
+            url = 'https://sc.ftqq.com/' + self.sckey + '.send'
+            response = requests.post(url, data=data, headers = {'Content-type': 'application/x-www-form-urlencoded'})
+            errno = response.json()['errno']
+        if errno == 0:
             self.log('用户:' + self.name + '  Server酱推送成功')
             logging.info('用户:' + self.name + '  Server酱推送成功')
         else:
@@ -161,6 +170,7 @@ class Task(object):
     title:消息的标题
     content:消息的内容,支持MarkDown格式
     '''
+
     def diyText(self):
         # today = datetime.date.today()
         # kaoyan_day = datetime.date(2020,12,21) #2021考研党的末日
@@ -240,7 +250,7 @@ class Task(object):
             self.list.append("- 打卡结束\n\n")
             self.list.append("- 消息推送\n\n")
             self.dakaSongs_list = ''.join(self.list)
-            if self.pushmethod == 'wxpusher':
+            if self.pushmethod.lower() == 'wxpusher':
                 self.wxpusher()
             else:
                 self.server()
