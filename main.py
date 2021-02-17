@@ -155,7 +155,7 @@ class Task(object):
             response = requests.post(url, data=data, headers = {'Content-type': 'application/x-www-form-urlencoded'})
             errno = response.json()['data']['errno']
         else:                                           #Server酱 普通版
-            url = 'https://sc.ftqq.com/' + self.sckey + '.send'
+            url = 'http://sc.ftqq.com/' + self.sckey + '.send'
             response = requests.post(url, data=data, headers = {'Content-type': 'application/x-www-form-urlencoded'})
             errno = response.json()['errno']
         if errno == 0:
