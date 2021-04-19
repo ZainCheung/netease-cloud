@@ -32,12 +32,14 @@ class Task(object):
     '''
     对象的构造函数
     '''
-    def __init__(self, uin, pwd, sckey, countrycode=86):
+    def __init__(self, uin, pwd, pushmethod, sckey, appToken, wxpusheruid, countrycode=86):
         self.uin = uin
         self.pwd = pwd
         self.countrycode = countrycode
+        self.pushmethod = pushmethod
         self.sckey = sckey
-
+        self.appToken = appToken
+        self.wxpusheruid = wxpusheruid
     '''
     带上用户的cookie去发送数据
     url:完整的URL路径
@@ -104,17 +106,59 @@ class Task(object):
         self.log('获取用户详情成功')
         logging.info('获取用户详情成功')
 
+
+    '''
+    Wxpusher推送
+    '''
+    def wxpusher(self):
+        if (self.appToken == '' or self.wxpusheruid == ''):
+            self.log('未填写WxPusher推送所需参数，请检查')
+            logger.info('未填写WxPusher推送所需参数，请检查')
+            return
+        self.diyText() # 构造发送内容
+        url = 'https://wxpusher.zjiecode.com/api/send/message/'
+        data = json.dumps({
+            "appToken":self.appToken,
+            "content":self.content,
+            "summary":self.title,
+            "contentType":3,
+            "uids":[self.wxpusheruid]
+        })
+        response = requests.post(url, data = data, headers = {'Content-Type': 'application/json;charset=UTF-8'})
+        if (response.json()['data'][0]['status']) == '创建发送任务成功':
+            self.log('用户:' + self.name + '  WxPusher推送成功')
+            logging.info('用户:' + self.name + '  WxPusher推送成功')
+        else:
+            self.log('用户:' + self.name + '  WxPusher推送失败,请检查appToken和uid是否正确')
+            logging.info('用户:' + self.name + '  WxPusher推送失败,请检查appToken和uid是否正确')
+
+    '''
+    自定义要推送到微信的内容
+    title:消息的标题
+    content:消息的内容,支持MarkDown格式
+    contentType:消息类型,1为普通文本,2为html,3为markdown
+    '''
+
     '''
     Server推送
     '''
     def server(self):
         if self.sckey == '':
             return
-        url = 'https://sc.ftqq.com/' + self.sckey + '.send'
         self.diyText() # 构造发送内容
-        response = requests.get(url,params={"text":self.title, "desp":self.content})
-        data = json.loads(response.text)
-        if data['errno'] == 0:
+        data = {
+            "text":self.title,
+            "desp":self.content
+        }
+        if (self.pushmethod.lower() == 'scturbo'):      #Server酱 Turbo版
+            url = 'https://sctapi.ftqq.com/' + self.sckey + '.send'
+            response = requests.post(url, data=data, headers = {'Content-type': 'application/x-www-form-urlencoded'})
+            errno = response.json()['data']['errno']
+        else:                                           #Server酱 普通版
+            url = 'http://sc.ftqq.com/' + self.sckey + '.send'
+            response = requests.post(url, data=data, headers = {'Content-type': 'application/x-www-form-urlencoded'})
+            errno = response.json()['errno']
+        if errno == 0:
             self.log('用户:' + self.name + '  Server酱推送成功')
             logging.info('用户:' + self.name + '  Server酱推送成功')
         else:
@@ -126,6 +170,7 @@ class Task(object):
     title:消息的标题
     content:消息的内容,支持MarkDown格式
     '''
+
     def diyText(self):
         # today = datetime.date.today()
         # kaoyan_day = datetime.date(2020,12,21) #2021考研党的末日
@@ -205,7 +250,10 @@ class Task(object):
             self.list.append("- 打卡结束\n\n")
             self.list.append("- 消息推送\n\n")
             self.dakaSongs_list = ''.join(self.list)
-            self.server()
+            if self.pushmethod.lower() == 'wxpusher':
+                self.wxpusher()
+            else:
+                self.server()
         except:
             self.log('用户任务执行中断,请检查账号密码是否正确')
             logging.error('用户任务执行中断,请检查账号密码是否正确========================================')
@@ -228,7 +276,10 @@ def init():
     api = config['setting']['api']
     md5Switch = config.getboolean('setting','md5Switch')
     peopleSwitch = config.getboolean('setting','peopleSwitch')
+    pushmethod = config['setting']['pushmethod']
     sckey = config['setting']['sckey']
+    appToken = config['setting']['appToken']
+    wxpusheruid = config['setting']['wxpusheruid']
     print('配置文件读取完毕')
     logging.info('配置文件读取完毕')
     conf = {
@@ -238,7 +289,10 @@ def init():
             'api': api,
             'md5Switch': md5Switch, 
             'peopleSwitch':peopleSwitch,
-            'sckey':sckey
+            'pushmethod':pushmethod,
+            'sckey':sckey,
+            'appToken':appToken,
+            'wxpusheruid':wxpusheruid
         }
     return conf
 
@@ -288,7 +342,7 @@ def taskPool():
         for man in account:
             print('账号: ' + man['account'] + '  开始执行')
             logging.info('账号: ' + man['account'] + '  开始执行========================================')
-            task = Task(man['account'], man['password'], man['sckey'])
+            task = Task(man['account'], man['password'], man['pushmethod'],man['sckey'], man['appToken'], man['wxpusheruid'])
             task.start()
             time.sleep(10)
         print('所有账号已全部完成任务,服务进入休眠中,等待明天重新启动')
@@ -300,7 +354,7 @@ def taskPool():
             print('MD5开关已打开,即将开始为你加密,密码不会上传至服务器,请知悉')
             logging.info('MD5开关已打开,即将开始为你加密,密码不会上传至服务器,请知悉')
             config['pwd'] = md5(config['pwd'])
-        task = Task(config['uin'], config['pwd'], config['sckey'], config['countrycode'])
+        task = Task(config['uin'], config['pwd'], config['pushmethod'], config['sckey'], config['appToken'], config['wxpusheruid'], config['countrycode'])
         task.start()
 
 '''
