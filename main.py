@@ -113,7 +113,7 @@ class Task(object):
     def wxpusher(self):
         if (self.appToken == '' or self.wxpusheruid == ''):
             self.log('未填写WxPusher推送所需参数，请检查')
-            logger.info('未填写WxPusher推送所需参数，请检查')
+            logging.info('未填写WxPusher推送所需参数，请检查')
             return
         self.diyText() # 构造发送内容
         url = 'https://wxpusher.zjiecode.com/api/send/message/'
