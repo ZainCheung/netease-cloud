@@ -73,14 +73,30 @@ md5开关，如果自己不会加密md5，那么将这个开关置为true，并�
 
 
 
-### 微信提醒
+### 任务推送
 
 ```bash
-# Server酱的密匙,不需要推送就留空,密匙的免费申请参考:http://sc.ftqq.com/
+# 推送方式选择
+# 可选参数wxpusher、SCTurbo或留空
+# wxpusher: 使用 WxPusher 推送
+# SCTurbo: 使用 Server酱Turbo版 推送
+# 留空：使用 Server酱免费版 推送或不推送
+pushmethod =
+
+# Server酱的密匙,不需要推送就留空
+# 免费版密匙的免费申请参考:http://sc.ftqq.com/
+# Turbo版的密钥获取:https://sct.ftqq.com/sendkey
+# 免费版和Turbo版的密钥长度不一样，请注意检查，不可混用
 sckey = SCU97783T70c13167b4daa422f4d419a765eb4ebb5ebc9********
+
+# Wxpusher 推送参数，需要将pushmethod指定为wxpusher，应用和uid的免费申请参考:https://wxpusher.zjiecode.com/
+appToken = AT_6kBmt***************************
+wxpusheruid = UID_t***************************
 ```
 
-Server酱，是一个可以向你的微信推送消息的服务，并且消息内容完全自定义，使用之前只需要前往官网，使用GitHub登陆，扫码绑定微信，便可以获得密匙，从此免费使用Server酱
+新版本新增了WxPusher微信推送服务和Server酱的订阅版推送，可通过更改`pushmethod`自行选择推送方式；`sckey`内容为自己申请的Server酱微信推送服务的密钥，分为免费版和订阅版，具体选择看个人需求；`appToken`和`wxpusheruid`都是WxPusher需要的参数，如果推送方式选择了WxPusher则需要配置。
+
+附：Server酱，是一个可以向你的微信推送消息的服务，并且消息内容完全自定义，使用之前只需要前往官网，使用GitHub登陆，扫码绑定微信，便可以获得密匙，从此免费使用Server酱。
 
 ------
 
@@ -104,33 +120,47 @@ peopleSwitch = false
     {
         "account": "ZainCheung@163.com",
         "password": "10ca5e4c316f81c5d9b56702********",
-        "sckey": "SCU97783T70c13167b4daa422f4d419a765eb4ebb5ebc9********"
+        "sckey": "SCU97783T70c13167b4daa422f4d419a765eb4ebb5ebc9********",
+        "pushmethod": "",
+        "appToken": "",
+        "wxpusheruid": ""
     },
     {
         "account": "150********",
         "password": "bfa834f7de58cb650ca01edb********",
-        "sckey": "SCU97783T70c13167b4daa422f4d419a765eb4ebb5ebc9********"
+        "sckey": "SCU97783T70c13167b4daa422f4d419a765eb4ebb5ebc9********",
+        "pushmethod": "",
+        "appToken": "",
+        "wxpusheruid": ""
     },
     {
         "account": "132********",
         "password": "f391235b15781c95384cd5bb********",
-        "sckey": "SCU97783T70c13167b4daa422f4d419a765eb4ebb5ebc9********"
+        "sckey": "SCU97783T70c13167b4daa422f4d419a765eb4ebb5ebc9********",
+        "pushmethod": "",
+        "appToken": "",
+        "wxpusheruid": ""
     }
 ]
 ```
 
-可见里面是一个数组文件，成员为账号对象，对象有三个属性，分别是账号、密码、Server酱密匙。
+可见里面是一个数组文件，成员为账号对象，对象有六个属性，分别是账号、密码、Server酱密匙，推送方式以及WxPusher所需要的两个配置项。
 
-不同的账号对应不同的密匙，在做完这个账号的任务后会给这个密匙绑定的微信发送消息提醒，如果留空则不提醒，留空也请注意语法，记得加双引号，列举一个正确的案例
+`pushmethod`留空默认为Server推送；`sckey`留空默认不推送。
+
+不同的账号对应不同的推送方法和相应的密匙，在做完这个账号的任务后会给这个密匙绑定的微信发送消息提醒，如果留空则不提醒，留空也请注意语法，记得加双引号，列举一个正确的案例
 
 ```json
 [
     {
         "account": "ZainCheung@163.com",
         "password": "10ca5e4c316f81c5d9b56702********",
-        "sckey": ""
+        "sckey": "",
+        "pushmethod": "",
+        "appToken": "",
+        "wxpusheruid": ""
     },
 ]
 ```
 
-可见这里的`sckey`为空，那么完成任务后便不会发送消息提醒，如果不确定是否成功可以查看日志
+可见这里的`sckey`和`pushmethod`都为空，那么完成任务后便不会发送消息提醒，如果不确定是否成功可以查看日志
