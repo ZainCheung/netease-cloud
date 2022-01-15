@@ -32,7 +32,8 @@ class Task(object):
     '''
     对象的构造函数
     '''
-    def __init__(self, uin, pwd, pushmethod, sckey, appToken, wxpusheruid, countrycode=86):
+
+    def __init__(self, uin, pwd, pushmethod, sckey, appToken, wxpusheruid, barkServer, barkKey, countrycode):
         self.uin = uin
         self.pwd = pwd
         self.countrycode = countrycode
@@ -40,6 +41,10 @@ class Task(object):
         self.sckey = sckey
         self.appToken = appToken
         self.wxpusheruid = wxpusheruid
+        self.barkServer = barkServer
+        if barkServer == "":
+            self.barkServer = "https://api.day.app"
+        self.barkKey = barkKey
     '''
     带上用户的cookie去发送数据
     url:完整的URL路径
@@ -131,6 +136,27 @@ class Task(object):
         else:
             self.log('用户:' + self.name + '  WxPusher推送失败,请检查appToken和uid是否正确')
             logging.info('用户:' + self.name + '  WxPusher推送失败,请检查appToken和uid是否正确')
+
+    '''
+    Bark推送
+    '''
+    def bark(self):
+        if self.barkServer == '' or self.barkKey == '':
+            self.log('未填写Bark推送所需参数，请检查')
+            return
+        self.diyText()  # 构造发送内容
+        url = self.barkServer+'/push'
+        data = json.dumps({
+            "title": self.title,
+            "body": self.content,
+            "device_key": self.barkKey,
+            "ext_params": {"group": "网易云签到"}
+        })
+        response = requests.post(url, data=data, headers={'Content-Type': 'application/json;charset=UTF-8'})
+        if (response.json()['message']) == 'success':
+            self.log('用户:' + self.name + '  Bark推送成功')
+        else:
+            self.log('用户:' + self.name + '  bark推送失败,请检查appToken和uid是否正确')
 
     '''
     自定义要推送到微信的内容
@@ -229,11 +255,11 @@ class Task(object):
             self.detail()
             counter  = self.listenSongs
             self.list.append("- 开始打卡\n\n")
-            for i in range(1,10):
+            for i in range(1, 10):
                 self.daka()
                # self.log('用户:' + self.name + '  第' + str(i) + '次打卡成功,即将休眠30秒')
                 self.log('第' + str(i) + '次打卡成功')
-                logging.info('用户:' + self.name + '  第' + str(i) + '次打卡成功,即将休眠30秒')
+                logging.info('用户:' + self.name + '  第' + str(i) + '次打卡成功,即将休眠10秒')
                 time.sleep(10)
                 self.dakanum =i
                 self.detail()
@@ -252,6 +278,8 @@ class Task(object):
             self.dakaSongs_list = ''.join(self.list)
             if self.pushmethod.lower() == 'wxpusher':
                 self.wxpusher()
+            elif self.pushmethod.lower() == 'bark':
+                self.bark()
             else:
                 self.server()
         except:
@@ -280,6 +308,8 @@ def init():
     sckey = config['setting']['sckey']
     appToken = config['setting']['appToken']
     wxpusheruid = config['setting']['wxpusheruid']
+    barkServer = config['setting']['barkServer']
+    barkKey = config['setting']['barkKey']
     print('配置文件读取完毕')
     logging.info('配置文件读取完毕')
     conf = {
@@ -292,7 +322,9 @@ def init():
             'pushmethod':pushmethod,
             'sckey':sckey,
             'appToken':appToken,
-            'wxpusheruid':wxpusheruid
+            'wxpusheruid':wxpusheruid,
+            'barkServer':barkServer,
+            'barkKey':barkKey
         }
     return conf
 
@@ -342,7 +374,7 @@ def taskPool():
         for man in account:
             print('账号: ' + man['account'] + '  开始执行')
             logging.info('账号: ' + man['account'] + '  开始执行========================================')
-            task = Task(man['account'], man['password'], man['pushmethod'],man['sckey'], man['appToken'], man['wxpusheruid'])
+            task = Task(man['account'], man['password'], man['pushmethod'], man['sckey'], man['appToken'], man['wxpusheruid'], man['barkServer'], man['barkKey'], man['countrycode'])
             task.start()
             time.sleep(10)
         print('所有账号已全部完成任务,服务进入休眠中,等待明天重新启动')
@@ -354,7 +386,7 @@ def taskPool():
             print('MD5开关已打开,即将开始为你加密,密码不会上传至服务器,请知悉')
             logging.info('MD5开关已打开,即将开始为你加密,密码不会上传至服务器,请知悉')
             config['pwd'] = md5(config['pwd'])
-        task = Task(config['uin'], config['pwd'], config['pushmethod'], config['sckey'], config['appToken'], config['wxpusheruid'], config['countrycode'])
+        task = Task(config['uin'], config['pwd'], config['pushmethod'], config['sckey'], config['appToken'], config['wxpusheruid'], config['barkServer'], config['barkKey'], config['countrycode'])
         task.start()
 
 '''
