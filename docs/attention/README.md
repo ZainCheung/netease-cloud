@@ -4,7 +4,7 @@
 
 一定要绑定微信才会有效果
 
-Server酱的官网地址：[http://sc.ftqq.com/](http://sc.ftqq.com/)
+Server酱的[官网地址](https://sct.ftqq.com/r/13288)
 
 ### MD5
 
